@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { siteConfig } from '../../data/content';
 import { Button } from '../ui/Button';
-import { LineReveal } from '../animations/Reveal';
 
 export function FinalCTASection() {
   return (

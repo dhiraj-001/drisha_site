@@ -1,19 +1,9 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
 import { pricingLegs, pricingComponents } from '../../data/content';
 import { Reveal } from '../animations/Reveal';
 
 export function PricingSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  });
-
-  const routeProgress = useTransform(scrollYProgress, [0.2, 0.8], [0, 1]);
-
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28 bg-charcoal text-white relative overflow-hidden">
+    <section className="py-20 lg:py-28 bg-charcoal text-white relative overflow-hidden">
       {/* Background route decoration */}
       <svg
         className="absolute inset-0 w-full h-full pointer-events-none opacity-5"

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { MapPin, Navigation, Share2, Eye } from 'lucide-react';
 import { trackingFeatures } from '../../data/content';
 import { Reveal } from '../animations/Reveal';
