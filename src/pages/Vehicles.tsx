@@ -84,12 +84,12 @@ export default function Vehicles() {
                     <div>
                       {/* Visual Header */}
                       <div className="relative h-[220px] bg-gradient-to-br from-champagne/40 via-ivory to-champagne/20 rounded-xl flex items-center justify-center p-6 mb-6 border border-warm-sand/20 overflow-hidden">
-                        <div className="absolute top-4 left-4 flex items-center gap-2">
-                          <span className="text-[10px] tracking-[0.15em] uppercase font-bold text-burgundy bg-white/90 backdrop-blur-sm px-3 py-1 rounded-md border border-warm-sand/20">
+                        <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+                          <span className="text-[10px] tracking-[0.15em] uppercase font-bold text-burgundy bg-white/95 backdrop-blur-md px-3 py-1 rounded-md border border-warm-sand/30 shadow-xs">
                             {vehicle.category}
                           </span>
                         </div>
-                        <div className="absolute top-4 right-4 text-xs font-bold text-warm-sand">
+                        <div className="absolute top-4 right-4 z-10 text-xs font-bold text-white/90 bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20">
                           0{index + 1}
                         </div>
 

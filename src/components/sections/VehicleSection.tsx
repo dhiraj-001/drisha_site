@@ -92,7 +92,7 @@ export function VehicleSection() {
                     {/* Vehicle Art Stage */}
                     <div className="relative h-[200px] bg-gradient-to-br from-champagne/40 via-ivory to-champagne/20 rounded-xl flex items-center justify-center p-4 mb-6 border border-warm-sand/20 overflow-hidden">
                       {/* Category Badge */}
-                      <span className="absolute top-3 left-3 text-[10px] tracking-[0.15em] uppercase font-bold text-burgundy bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md border border-warm-sand/20">
+                      <span className="absolute top-3 left-3 z-10 text-[10px] tracking-[0.15em] uppercase font-bold text-burgundy bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-md border border-warm-sand/30 shadow-xs">
                         {vehicle.category}
                       </span>
 
