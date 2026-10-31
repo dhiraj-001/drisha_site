@@ -12,8 +12,8 @@ export function Footer() {
   return (
     <footer className="relative bg-[#1a1715] text-white/80 -mt-px overflow-hidden">
       {/* Background subtle ambiance glow */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-burgundy/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-warm-sand/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-burgundy/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-warm-sand/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Main Footer Container */}
       <div className="relative container-editorial pt-12 pb-12 lg:pt-14 lg:pb-16">

@@ -102,8 +102,8 @@ export function FinalCTASection() {
         </div>
       </div>
 
-      {/* Oversized section number */}
-      <div className="absolute -right-4 bottom-4 select-none pointer-events-none opacity-[0.05]">
+      {/* Oversized section watermark */}
+      <div className="absolute -right-4 top-1/2 -translate-y-1/2 select-none pointer-events-none opacity-[0.04]">
         <span
           className="text-[16rem] font-extrabold leading-none text-white"
           style={{ fontFamily: 'var(--font-family-heading)' }}
@@ -111,6 +111,9 @@ export function FinalCTASection() {
           12
         </span>
       </div>
+
+      {/* Smooth bottom blend overlay into the footer */}
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-[#1a1715]/80 to-[#1a1715] pointer-events-none z-[1]" />
     </section>
   );
 }
