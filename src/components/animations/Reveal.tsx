@@ -106,13 +106,13 @@ interface LineRevealProps {
 
 export function LineReveal({ children, delay = 0, className = '' }: LineRevealProps) {
   return (
-    <div className={`overflow-hidden ${className}`}>
+    <div className={`overflow-visible ${className}`}>
       <motion.div
-        initial={{ y: '100%' }}
-        whileInView={{ y: 0 }}
-        viewport={{ once: true, amount: 0.5 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{
-          duration: 0.8,
+          duration: 0.7,
           delay,
           ease: [0.25, 0.4, 0.25, 1],
         }}

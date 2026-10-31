@@ -6,7 +6,7 @@ import { LineReveal } from '../animations/Reveal';
 
 export function FinalCTASection() {
   return (
-    <section className="py-24 lg:py-36 bg-gradient-to-b from-[#722f37] via-[#5c242c] to-[#451b21] relative overflow-hidden">
+    <section className="pt-20 pb-16 lg:pt-28 lg:pb-20 bg-gradient-to-b from-[#722f37] via-[#4d1f25] to-[#1a1715] relative overflow-hidden">
       {/* Ambient center glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-champagne/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -39,22 +39,26 @@ export function FinalCTASection() {
           </div>
 
           {/* Headline */}
-          <LineReveal>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.7, ease: [0.25, 0.4, 0.25, 1] }}
+            className="mb-8"
+          >
             <h2
-              className="text-[clamp(2.5rem,5.5vw,4.5rem)] font-bold tracking-tight text-white leading-[1.08] mb-3"
+              className="text-[clamp(2.25rem,5vw,4.25rem)] font-bold tracking-tight text-white leading-[1.15] mb-2"
               style={{ fontFamily: 'var(--font-family-heading)' }}
             >
               Your people. Your plans.
             </h2>
-          </LineReveal>
-          <LineReveal delay={0.15}>
             <h2
-              className="text-[clamp(2.5rem,5.5vw,4.5rem)] font-bold tracking-tight text-champagne leading-[1.08] mb-8"
+              className="text-[clamp(2.25rem,5vw,4.25rem)] font-bold tracking-tight text-champagne leading-[1.15]"
               style={{ fontFamily: 'var(--font-family-heading)' }}
             >
               One better way to get there.
             </h2>
-          </LineReveal>
+          </motion.div>
 
           {/* Supporting */}
           <motion.p

@@ -10,13 +10,13 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#1a1715] text-white/80 border-t border-warm-sand/20 overflow-hidden">
+    <footer className="relative bg-[#1a1715] text-white/80 -mt-px overflow-hidden">
       {/* Background subtle ambiance glow */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-burgundy/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-warm-sand/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Main Footer Container */}
-      <div className="relative container-editorial pt-16 pb-12 lg:pt-20 lg:pb-16">
+      <div className="relative container-editorial pt-12 pb-12 lg:pt-14 lg:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10">
           {/* Brand Column */}
           <div className="lg:col-span-5 flex flex-col justify-between">
@@ -25,7 +25,7 @@ export function Footer() {
                 <img
                   src="/brand/drisha-logo-light.svg"
                   alt={siteConfig.name}
-                  width="200"
+                  width="220"
                   height="40"
                   className="h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-[1.02]"
                 />
@@ -158,7 +158,7 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10 bg-[#141211]">
-        <div className="container-editorial py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="container-editorial py-6 pb-8 sm:pb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/45 text-center sm:text-left">
             © {CURRENT_YEAR} Drisha Mobility Inc. All rights reserved.
           </p>
