@@ -10,7 +10,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#1a1715] text-white/80 -mt-px overflow-hidden">
+    <footer className="relative bg-[#1a1715] text-white/80 -mt-px overflow-hidden pt-5">
       {/* Background subtle ambiance glow */}
       <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-burgundy/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-warm-sand/5 rounded-full blur-3xl pointer-events-none" />
@@ -159,7 +159,7 @@ export function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10 bg-[#141211] mt-3">
         <div className="container-editorial py-6 pb-8 sm:pb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/45 text-center sm:text-left">
+          <p className="text-xs text-white/45 text-center sm:text-left mt-3 md:mt-0">
             © {CURRENT_YEAR} DN Mobility Technologies Pvt. Ltd. All rights reserved.
           </p>
 
