@@ -5,7 +5,7 @@ import { Button } from '../ui/Button';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-champagne">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-champagne pt-24 lg:pt-0">
       {/* Background subtle gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-champagne via-ivory to-champagne-light" />
 
@@ -55,7 +55,7 @@ export function HeroSection() {
       </motion.div>
 
       {/* Main Content */}
-      <div className="container-editorial relative z-10 pt-36 sm:pt-38 lg:pt-40 pb-20 lg:pb-28">
+      <div className="container-editorial relative z-10 pt-64 sm:pt-38 lg:pt-40 pb-20 lg:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column — Editorial Typography */}
           <div className="lg:col-span-7">
