@@ -2,7 +2,7 @@ import { Reveal } from '../components/animations/Reveal';
 
 export default function Privacy() {
   return (
-    <div className="pt-24 lg:pt-32 pb-16 lg:pb-20">
+    <div className="pt-32 sm:pt-36 lg:pt-40 pb-16 lg:pb-20">
       <div className="container-narrow">
         <Reveal>
           <div className="flex items-center gap-4 mb-4">

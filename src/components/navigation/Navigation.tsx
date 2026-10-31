@@ -305,7 +305,8 @@ export function Navigation() {
               bg-ivory
               px-6 sm:px-10
               pb-8
-              pt-24
+              pt-28 sm:pt-32
+              overflow-y-auto
             "
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -404,23 +405,36 @@ export function Navigation() {
                 delay: reduceMotion ? 0 : 0.3,
                 duration: reduceMotion ? 0 : 0.35,
               }}
-              className="space-y-5 pt-8 max-w-2xl mx-auto w-full"
+              className="space-y-3 pt-6 max-w-2xl mx-auto w-full"
             >
               <Button
                 href={siteConfig.consumerAppLink}
                 size="lg"
                 rounded="full"
-                className="w-full justify-center"
+                className="w-full justify-center gap-2"
               >
-                Plan your journey
+                Consumer App (v1.0.0)
                 <ArrowUpRight
                   size={18}
-                  className="ml-1.5"
                   aria-hidden="true"
                 />
               </Button>
 
-              <p className="text-center text-xs tracking-wide text-taupe">
+              <Button
+                href={siteConfig.partnerAppLink}
+                variant="outline"
+                size="lg"
+                rounded="full"
+                className="w-full justify-center gap-2"
+              >
+                Partner App (v1.0.0)
+                <ArrowUpRight
+                  size={18}
+                  aria-hidden="true"
+                />
+              </Button>
+
+              <p className="text-center text-xs tracking-wide text-taupe pt-1">
                 Northeast India and across the nation.
                 <br />
                 Group mobility platform.

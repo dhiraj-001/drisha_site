@@ -12,6 +12,8 @@ export interface ButtonProps {
   className?: string;
   type?: 'button' | 'submit';
   disabled?: boolean;
+  target?: string;
+  rel?: string;
 }
 
 const MotionLink = motion.create(Link);
@@ -26,6 +28,8 @@ export function Button({
   className = '',
   type = 'button',
   disabled = false,
+  target,
+  rel,
 }: ButtonProps) {
   const baseStyles =
     'group relative inline-flex items-center justify-center font-medium tracking-wide transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-burgundy/40 disabled:opacity-50 disabled:cursor-not-allowed select-none [&>svg]:transition-transform [&>svg]:duration-300 group-hover:[&>svg]:translate-x-1';
@@ -80,9 +84,14 @@ export function Button({
       );
     }
 
+    const defaultTarget = href.startsWith('http') ? '_blank' : undefined;
+    const defaultRel = href.startsWith('http') ? 'noopener noreferrer' : undefined;
+
     return (
       <motion.a
         href={href}
+        target={target ?? defaultTarget}
+        rel={rel ?? defaultRel}
         className={classes}
         {...motionProps}
       >

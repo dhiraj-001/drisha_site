@@ -63,7 +63,7 @@ export default function Contact() {
   ];
 
   return (
-    <div className="pt-24 lg:pt-32 pb-16 lg:pb-20">
+    <div className="pt-32 sm:pt-36 lg:pt-40 pb-16 lg:pb-20">
       {/* Header */}
       <section className="container-editorial mb-10 lg:mb-14">
         <Reveal>

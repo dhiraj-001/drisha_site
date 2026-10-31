@@ -7,9 +7,8 @@ export const siteConfig = {
   positioning: 'Group journeys, connected across India.',
   supportingStatement:
     'Starting in Northeast India, Drisha is building a smarter way to organize group transportation — connecting travellers, fleet owners, and professional drivers.',
-  // Replace with actual links when available
-  consumerAppLink: '#',
-  partnerAppLink: '#',
+  consumerAppLink: 'https://github.com/dhiraj-001/Drisha_consumer_app/releases/tag/v1.0.0',
+  partnerAppLink: 'https://github.com/dhiraj-001/Drisha_partner_app/releases/tag/v.1.0.0',
   socialLinks: {
     // Add verified social media URLs only
   },

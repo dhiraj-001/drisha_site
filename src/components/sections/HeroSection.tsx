@@ -55,7 +55,7 @@ export function HeroSection() {
       </motion.div>
 
       {/* Main Content */}
-      <div className="container-editorial relative z-10 pt-32 pb-20 lg:pt-38 lg:pb-28">
+      <div className="container-editorial relative z-10 pt-36 sm:pt-38 lg:pt-40 pb-20 lg:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column — Editorial Typography */}
           <div className="lg:col-span-7">
