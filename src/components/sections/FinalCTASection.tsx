@@ -6,13 +6,19 @@ import { LineReveal } from '../animations/Reveal';
 
 export function FinalCTASection() {
   return (
-    <section className="pt-20 pb-16 lg:pt-28 lg:pb-20 bg-gradient-to-b from-[#722f37] via-[#4d1f25] to-[#1a1715] relative overflow-hidden">
+    <section
+      className="pt-20 pb-16 lg:pt-28 lg:pb-20 relative overflow-hidden"
+      style={{
+        background:
+          'linear-gradient(180deg, #722f37 0%, #612830 18%, #4e2027 36%, #3b1a20 54%, #2b161a 70%, #1f1616 84%, #1a1715 95%, #1a1715 100%)',
+      }}
+    >
       {/* Ambient center glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-champagne/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Background pattern */}
+      {/* Background pattern with bottom fade mask */}
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-10"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-10 [mask-image:linear-gradient(to_bottom,black_60%,transparent_92%)]"
         viewBox="0 0 1440 600"
         preserveAspectRatio="xMidYMid slice"
       >
@@ -102,8 +108,8 @@ export function FinalCTASection() {
         </div>
       </div>
 
-      {/* Oversized section watermark */}
-      <div className="absolute -right-4 top-1/2 -translate-y-1/2 select-none pointer-events-none opacity-[0.04]">
+      {/* Oversized section watermark with fade mask */}
+      <div className="absolute -right-4 top-1/2 -translate-y-1/2 select-none pointer-events-none opacity-[0.04] [mask-image:linear-gradient(to_bottom,black_40%,transparent_90%)]">
         <span
           className="text-[16rem] font-extrabold leading-none text-white"
           style={{ fontFamily: 'var(--font-family-heading)' }}
@@ -111,9 +117,6 @@ export function FinalCTASection() {
           12
         </span>
       </div>
-
-      {/* Smooth bottom blend overlay into the footer */}
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-[#1a1715]/80 to-[#1a1715] pointer-events-none z-[1]" />
     </section>
   );
 }

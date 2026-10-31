@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Truck, ArrowRight } from 'lucide-react';
 import { partnerFeatures, siteConfig } from '../../data/content';
@@ -5,6 +6,8 @@ import { Reveal, StaggerContainer, StaggerItem } from '../animations/Reveal';
 import { Button } from '../ui/Button';
 
 export function PartnerAppSection() {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
     <section className="py-20 lg:py-28 bg-ivory relative overflow-hidden">
       <div className="container-editorial">
@@ -19,15 +22,27 @@ export function PartnerAppSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-                <div className="relative w-[280px] sm:w-[310px] mx-auto">
+                <div className="relative w-[280px] sm:w-[310px] mx-auto z-10 isolate">
                   <div className="bg-[#1c1a18] rounded-[3rem] p-3 shadow-2xl border-4 border-[#36322f]">
                     {/* Dynamic Island */}
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-4 bg-black rounded-full z-20 flex items-center justify-end px-2">
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-4 bg-black rounded-full z-30 flex items-center justify-end px-2">
                       <div className="w-2 h-2 rounded-full bg-emerald-500/80" />
                     </div>
 
-                    <div className="bg-ivory rounded-[2.3rem] overflow-hidden aspect-[9/19] flex flex-col justify-between border border-warm-sand/30">
-                      {/* App Header */}
+                    <div className="bg-ivory rounded-[2.3rem] overflow-hidden aspect-[9/19] relative border border-warm-sand/30">
+                      {/* Real Partner App Screenshot */}
+                      <img
+                        src="/images/partner-app-preview.png"
+                        alt="Drisha Fleet Partner App"
+                        className={`absolute inset-0 w-full h-full object-cover z-20 transition-opacity duration-300 ${
+                          imageLoaded ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                        }`}
+                        onLoad={() => setImageLoaded(true)}
+                        onError={() => setImageLoaded(false)}
+                      />
+
+                      <div className="flex flex-col justify-between h-full">
+                        {/* App Header */}
                       <div className="pt-8 px-5 pb-4 bg-gradient-to-b from-[#252220] to-[#171514] text-white">
                         <div className="flex items-center justify-between mb-3 text-[10px] text-white/70">
                           <span>09:41 AM</span>
@@ -92,10 +107,11 @@ export function PartnerAppSection() {
                     </div>
                   </div>
                 </div>
+              </div>
 
                 {/* Floating label 1 */}
                 <motion.div
-                  className="absolute -right-2 sm:-right-8 top-1/4 bg-white/95 backdrop-blur-md shadow-xl rounded-xl p-3.5 border border-warm-sand/30"
+                  className="absolute -right-2 sm:-right-8 top-1/4 bg-white/95 backdrop-blur-md shadow-xl rounded-xl p-3.5 border border-warm-sand/30 z-30"
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -106,7 +122,7 @@ export function PartnerAppSection() {
                 </motion.div>
 
                 <motion.div
-                  className="absolute -left-2 sm:-left-8 bottom-1/4 bg-white/95 backdrop-blur-md shadow-xl rounded-xl p-3.5 border border-warm-sand/30"
+                  className="absolute -left-2 sm:-left-8 bottom-1/4 bg-white/95 backdrop-blur-md shadow-xl rounded-xl p-3.5 border border-warm-sand/30 z-30"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}

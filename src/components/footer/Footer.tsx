@@ -23,11 +23,11 @@ export function Footer() {
             <div>
               <Link to="/" className="inline-block group mb-6 focus:outline-none" aria-label={siteConfig.name}>
                 <img
-                  src="/brand/drisha-logo-light.svg"
+                  src="/brand/drisha-logo-white.png"
                   alt={siteConfig.name}
-                  width="220"
-                  height="40"
-                  className="h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-[1.02]"
+                  width="200"
+                  height="200"
+                  className="h-12 lg:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                 />
               </Link>
 
@@ -61,7 +61,7 @@ export function Footer() {
                   className="flex items-center gap-1.5 hover:text-champagne transition-colors"
                 >
                   <Mail size={13} className="text-warm-sand" />
-                  <span>support@drishamobility.com</span>
+                  <span>support@dnamobility.com</span>
                 </a>
                 <span className="flex items-center gap-1.5">
                   <MapPin size={13} className="text-warm-sand" />
@@ -157,10 +157,10 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/10 bg-[#141211]">
+      <div className="border-t border-white/10 bg-[#141211] mt-3">
         <div className="container-editorial py-6 pb-8 sm:pb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/45 text-center sm:text-left">
-            © {CURRENT_YEAR} Drisha Mobility Inc. All rights reserved.
+            © {CURRENT_YEAR} DN Mobility Technologies Pvt. Ltd. All rights reserved.
           </p>
 
           <p className="text-xs text-white/40 text-center">
