@@ -1,0 +1,150 @@
+@import "tailwindcss";
+@import "@fontsource-variable/sora";
+@import "@fontsource-variable/inter";
+
+/* ─── Brand Design Tokens ─── */
+@theme {
+  --color-warm-sand: #b7a891;
+  --color-champagne: #e8dcc6;
+  --color-burgundy: #722f37;
+  --color-burgundy-dark: #5a252c;
+  --color-charcoal: #211e1c;
+  --color-ivory: #f8f5ef;
+  --color-taupe: #8e8375;
+  --color-white: #ffffff;
+  --color-champagne-light: #f0e8d8;
+
+  --font-heading: "Sora Variable", "Sora", system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+}
+
+/* ─── Global Reset & Base (inside @layer base so Tailwind utilities override them) ─── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-family-body);
+    color: var(--color-charcoal);
+    background-color: var(--color-ivory);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-heading);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  button {
+    font-family: var(--font-family-body);
+    cursor: pointer;
+  }
+
+  input, textarea, select {
+    font-family: var(--font-family-body);
+  }
+}
+
+/* ─── Selection ─── */
+::selection {
+  background-color: var(--color-burgundy);
+  color: var(--color-ivory);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-warm-sand);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-taupe);
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Utility Classes ─── */
+.section-label {
+  font-family: var(--font-family-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-taupe);
+}
+
+.section-number {
+  font-family: var(--font-family-heading);
+  font-size: clamp(4rem, 8vw, 8rem);
+  font-weight: 800;
+  color: var(--color-warm-sand);
+  opacity: 0.15;
+  line-height: 1;
+  user-select: none;
+}
+
+.editorial-divider {
+  width: 60px;
+  height: 1px;
+  background-color: var(--color-warm-sand);
+}
+
+/* ─── Route Line SVG ─── */
+.route-line {
+  stroke: var(--color-burgundy);
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.route-line-subtle {
+  stroke: var(--color-warm-sand);
+  stroke-width: 1;
+  fill: none;
+  stroke-dasharray: 4 4;
+}
+
+/* ─── Container ─── */
+.container-editorial {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
+}
+
+.container-narrow {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
+}

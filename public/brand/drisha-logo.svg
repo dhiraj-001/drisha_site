@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="40" viewBox="0 0 200 40" fill="none">
+  <!-- Brand Icon: Connected Mobility Path -->
+  <g transform="translate(2, 4)">
+    <circle cx="16" cy="16" r="15" fill="#722f37" fill-opacity="0.08" stroke="#722f37" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <!-- Dynamic curved route -->
+    <path d="M7 21C11 11 21 11 25 21" stroke="#722f37" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M10 15C13 22 19 22 22 15" stroke="#b7a891" stroke-width="2" stroke-linecap="round"/>
+    <!-- Node points -->
+    <circle cx="7" cy="21" r="2.5" fill="#722f37"/>
+    <circle cx="25" cy="21" r="2.5" fill="#722f37"/>
+    <circle cx="16" cy="10" r="2" fill="#b7a891"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="44" y="26" font-family="'Sora', system-ui, -apple-system, sans-serif" font-size="24" font-weight="800" letter-spacing="-0.03em" fill="#722f37">drisha</text>
+  <text x="126" y="26" font-family="'Inter', system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="700" letter-spacing="0.25em" fill="#8e8375">MOBILITY</text>
+</svg>
