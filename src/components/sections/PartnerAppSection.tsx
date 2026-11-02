@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Truck, ArrowRight } from 'lucide-react';
-import { partnerFeatures, siteConfig } from '../../data/content';
+import { siteConfig } from '../../data/content';
 import { Reveal, StaggerContainer, StaggerItem } from '../animations/Reveal';
 import { Button } from '../ui/Button';
 
