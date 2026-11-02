@@ -117,7 +117,7 @@ export function PartnerAppSection() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.8, duration: 0.5 }}
                 >
-                  <span className="text-[9px] tracking-[0.15em] uppercase text-burgundy font-bold block">Predictable Revenue</span>
+                  <span className="text-[9px] tracking-[0.15em] uppercase text-burgundy font-bold block">Fleet & Drivers</span>
                   <p className="text-xs text-charcoal font-bold mt-0.5">Automated Multi-Leg Payouts</p>
                 </motion.div>
 
@@ -128,8 +128,8 @@ export function PartnerAppSection() {
                   viewport={{ once: true }}
                   transition={{ delay: 1, duration: 0.5 }}
                 >
-                  <span className="text-[9px] tracking-[0.15em] uppercase text-emerald-700 font-bold block">Connected Booking Flow</span>
-                  <p className="text-xs text-charcoal font-bold mt-0.5">Zero Idle Fleet Days</p>
+                  <span className="text-[9px] tracking-[0.15em] uppercase text-emerald-700 font-bold block">Commercial Drivers</span>
+                  <p className="text-xs text-charcoal font-bold mt-0.5">Vehicle Contracts in App</p>
                 </motion.div>
               </motion.div>
             </div>
@@ -140,7 +140,7 @@ export function PartnerAppSection() {
             <Reveal>
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-10 h-px bg-burgundy" />
-                <span className="section-label">Partner Application</span>
+                <span className="section-label">Partner Application • Fleets & Drivers</span>
               </div>
             </Reveal>
 
@@ -149,32 +149,43 @@ export function PartnerAppSection() {
                 className="text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight text-charcoal leading-[1.1] mb-6"
                 style={{ fontFamily: 'var(--font-family-heading)' }}
               >
-                Your fleet. Your business. Connected.
+                Your fleet. Your driving skills. Connected.
               </h2>
             </Reveal>
 
             <Reveal delay={0.2}>
-              <p className="text-lg text-taupe leading-relaxed mb-10">
-                A connected platform that helps fleet owners manage their vehicles, availability, drivers, bookings, and earnings.
+              <p className="text-lg text-taupe leading-relaxed mb-8">
+                A unified mobile app built for both fleet owners and commercial drivers. Fleet operators manage vehicles and rate cards, while drivers can register directly to receive vehicle driving contracts without owning a vehicle.
               </p>
             </Reveal>
 
             <StaggerContainer className="space-y-3 mb-10" staggerDelay={0.06}>
-              {partnerFeatures.map((feature) => (
+              {[
+                'Fleet vehicle registration & rate configuration',
+                'Driver registration with commercial DL verification',
+                'Direct vehicle driving contracts & trip dispatch',
+                'Duty status management (Available / On-Trip / Off-Duty)',
+                'Automated multi-leg payouts & driver allowances',
+              ].map((feature) => (
                 <StaggerItem key={feature}>
                   <div className="flex items-center gap-3">
                     <div className="w-1.5 h-1.5 bg-burgundy rounded-full flex-shrink-0" />
-                    <span className="text-sm text-charcoal/70">{feature}</span>
+                    <span className="text-sm text-charcoal/80 font-medium">{feature}</span>
                   </div>
                 </StaggerItem>
               ))}
             </StaggerContainer>
 
             <Reveal delay={0.5}>
-              <Button href={siteConfig.partnerAppLink} variant="outline" size="lg" className="gap-2">
-                Become a Drisha Partner
-                <ArrowRight size={18} />
-              </Button>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button href="/partner" variant="primary" size="lg" className="gap-2">
+                  Explore Partner & Driver Tracks
+                  <ArrowRight size={18} />
+                </Button>
+                <Button href={siteConfig.partnerAppLink} variant="outline" size="lg">
+                  Download Partner App
+                </Button>
+              </div>
             </Reveal>
           </div>
         </div>

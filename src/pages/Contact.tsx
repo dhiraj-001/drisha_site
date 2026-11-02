@@ -225,6 +225,7 @@ export default function Contact() {
                         <option value="General Inquiry">General Inquiry</option>
                         <option value="Trip Planning">Trip Planning & Quotes</option>
                         <option value="Partner Fleet Onboarding">Partner Fleet Onboarding</option>
+                        <option value="Driver Registration & Contracts">Driver Registration & Contracts</option>
                         <option value="Corporate Partnerships">Corporate Partnerships</option>
                         <option value="Feedback & Support">Feedback & Support</option>
                       </select>

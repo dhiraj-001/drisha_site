@@ -22,40 +22,44 @@ export function PartnerRecruitSection() {
                 className="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight text-charcoal leading-[1.1] mb-6"
                 style={{ fontFamily: 'var(--font-family-heading)' }}
               >
-                Have a fleet?<br />
-                Let's put it to work.
+                Have a fleet or commercial DL?<br />
+                Let's put them to work.
               </h2>
             </Reveal>
 
             <Reveal delay={0.2}>
               <p className="text-lg text-taupe leading-relaxed mb-8">
-                Join Drisha as a fleet partner and connect your vehicles to a growing network of group transportation demand. Manage your fleet digitally and grow your business.
+                Join Drisha as a fleet owner or professional commercial driver. Monetize your vehicles or get contracts to drive without owning a vehicle — all managed seamlessly inside the Drisha Partner App.
               </p>
             </Reveal>
 
             <Reveal delay={0.3}>
               <div className="space-y-3 mb-10">
                 {[
-                  'Digital fleet onboarding',
-                  'Vehicle information management',
-                  'Rate configuration',
-                  'Availability management',
-                  'Driver and booking coordination',
-                  'Connected booking and earnings workflows',
+                  'Digital fleet onboarding & vehicle inventory',
+                  'Commercial driver registration with DL verification',
+                  'Vehicle driving contract matching & dispatch',
+                  'Custom rate configuration with dead-mileage safeguards',
+                  'Guaranteed driver allowances & automated payouts',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <div className="w-1.5 h-1.5 bg-burgundy rounded-full flex-shrink-0" />
-                    <span className="text-sm text-charcoal/70">{item}</span>
+                    <span className="text-sm text-charcoal/80 font-medium">{item}</span>
                   </div>
                 ))}
               </div>
             </Reveal>
 
             <Reveal delay={0.4}>
-              <Button href="/partner" size="lg" className="gap-2">
-                Join as a Partner
-                <ArrowRight size={18} />
-              </Button>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button href="/partner" size="lg" className="gap-2">
+                  Partner Portal
+                  <ArrowRight size={18} />
+                </Button>
+                <Button href="/partner#drivers" variant="outline" size="lg">
+                  Driver Contracts
+                </Button>
+              </div>
             </Reveal>
           </div>
 

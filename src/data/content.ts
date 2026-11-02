@@ -159,28 +159,57 @@ export const partnerFeatures = [
   'Depot and operating radius setup',
   'Rate-card configuration',
   'Vehicle availability management',
-  'Driver management',
-  'Booking management',
+  'Driver roster & contract assignments',
+  'Booking management & dispatch',
   'Earnings and ledger information',
+];
+
+export const driverFeatures = [
+  'Commercial driver registration',
+  'Vehicle driving contracts & dispatch',
+  'Zero vehicle ownership required',
+  'Duty status toggle (Available / On-Trip / Off-Duty)',
+  'Guaranteed driver allowances & payouts',
+  'Turn-by-turn route & pickup details',
+  'Verified fleet owner partnerships',
+  'Transparent digital earnings ledger',
 ];
 
 export const partnerOnboardingSteps = [
   {
     step: '01',
     title: 'Register Your Fleet',
-    description: 'Sign up on Drisha Partner and add your fleet details to get started.',
+    description: 'Sign up on the Drisha Partner App and add your fleet details to get started.',
   },
   {
     step: '02',
     title: 'Add Vehicles & Configure',
     description:
-      'Add vehicles, set operating details, configure rate cards, and manage driver information.',
+      'Add vehicles, set operating details, configure rate cards, and assign verified drivers.',
   },
   {
     step: '03',
-    title: 'Manage Through Drisha Partner',
+    title: 'Manage & Earn Through Drisha Partner',
     description:
-      'Receive and manage bookings, track earnings, and grow your business through the connected platform.',
+      'Receive confirmed bookings, track dispatches, and receive guaranteed payouts through the connected platform.',
+  },
+];
+
+export const driverOnboardingSteps = [
+  {
+    step: '01',
+    title: 'Download & Select Driver Role',
+    description: 'Install the Drisha Partner App and register your profile as a Commercial Driver.',
+  },
+  {
+    step: '02',
+    title: 'Verify Commercial Driving License',
+    description: 'Upload your commercial DL and identity documents for quick depot verification.',
+  },
+  {
+    step: '03',
+    title: 'Get Vehicle Contracts & Drive',
+    description: 'Toggle your status to Available, receive vehicle driving contracts from fleet operators, and earn transparent allowances.',
   },
 ];
 
@@ -210,9 +239,10 @@ export const footerLinks = {
     { label: 'Contact', href: '/contact' },
   ],
   partners: [
-    { label: 'Become a Partner', href: '/partner' },
-    { label: 'Partner Benefits', href: '/partner#benefits' },
-    { label: 'Fleet Registration', href: '/partner' },
+    { label: 'Partner Portal Overview', href: '/partner' },
+    { label: 'Fleet Owners', href: '/partner#fleet' },
+    { label: 'Driver Registration & Contracts', href: '/partner#drivers' },
+    { label: 'Partner App Download', href: siteConfig.partnerAppLink },
   ],
   business: [
     { label: 'Corporate Enquiries', href: '/corporate' },
