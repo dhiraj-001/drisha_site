@@ -13,6 +13,8 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import FoundingFleetPage from './pages/FoundingFleetPage';
+import AdminFoundingFleet from './pages/AdminFoundingFleet';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -45,6 +47,8 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/founding-fleet" element={<FoundingFleetPage />} />
+            <Route path="/admin/founding-fleet" element={<AdminFoundingFleet />} />
             {/* Fallback to Home */}
             <Route path="*" element={<Home />} />
           </Routes>

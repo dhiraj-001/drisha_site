@@ -224,6 +224,7 @@ export const corporateUseCases = [
 
 export const navigationLinks = [
   { label: 'Vehicles', href: '/vehicles' },
+  { label: 'Founding Fleet', href: '/founding-fleet' },
   { label: 'How It Works', href: '/how-it-works' },
   { label: 'Corporate', href: '/corporate' },
   { label: 'About', href: '/about' },
@@ -240,9 +241,11 @@ export const footerLinks = {
   ],
   partners: [
     { label: 'Partner Portal Overview', href: '/partner' },
+    { label: 'Founding Fleet Pre-Registration', href: '/founding-fleet' },
     { label: 'Fleet Owners', href: '/partner#fleet' },
     { label: 'Driver Registration & Contracts', href: '/partner#drivers' },
     { label: 'Partner App Download', href: siteConfig.partnerAppLink },
+    { label: 'Fleet Admin Console', href: '/admin/founding-fleet' },
   ],
   business: [
     { label: 'Corporate Enquiries', href: '/corporate' },

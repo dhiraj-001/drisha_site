@@ -7,6 +7,7 @@ import { TrackingSection } from '../components/sections/TrackingSection';
 import { ConsumerAppSection } from '../components/sections/ConsumerAppSection';
 import { PartnerAppSection } from '../components/sections/PartnerAppSection';
 import { PartnerRecruitSection } from '../components/sections/PartnerRecruitSection';
+import { FoundingFleetSection } from '../components/sections/FoundingFleetSection';
 import { CorporateSection } from '../components/sections/CorporateSection';
 import { RegionalVisionSection } from '../components/sections/RegionalVisionSection';
 import { FinalCTASection } from '../components/sections/FinalCTASection';
@@ -23,6 +24,7 @@ export default function Home() {
       <ConsumerAppSection />
       <PartnerAppSection />
       <PartnerRecruitSection />
+      <FoundingFleetSection />
       <CorporateSection />
       <RegionalVisionSection />
       <FinalCTASection />

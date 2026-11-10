@@ -52,11 +52,14 @@ export function PartnerRecruitSection() {
 
             <Reveal delay={0.4}>
               <div className="flex flex-wrap items-center gap-3">
-                <Button href="/partner" size="lg" className="gap-2">
-                  Partner Portal
+                <Button href="#founding-fleet" size="lg" className="gap-2">
+                  Pre-Register Your Vehicle
                   <ArrowRight size={18} />
                 </Button>
-                <Button href="/partner#drivers" variant="outline" size="lg">
+                <Button href="/partner" variant="outline" size="lg">
+                  Partner Portal
+                </Button>
+                <Button href="/partner#drivers" variant="ghost" size="lg">
                   Driver Contracts
                 </Button>
               </div>
