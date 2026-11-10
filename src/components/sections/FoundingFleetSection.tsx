@@ -11,6 +11,7 @@ import {
   RefreshCw,
   Sparkles,
   Info,
+  Languages,
 } from 'lucide-react';
 import { Reveal } from '../animations/Reveal';
 import { Button } from '../ui/Button';
@@ -20,17 +21,128 @@ import {
 } from '../../lib/api';
 import type { PreRegistrationResponse } from '../../lib/api';
 
-const VEHICLE_CATEGORIES = [
-  'Hatchback',
-  'Sedan',
-  'SUV',
-  'MUV',
-  'Premium Vehicle',
-  'Tempo Traveller',
-  'Mini Bus',
-  'Bus',
-  'Other',
+type Language = 'en' | 'as';
+
+interface CategoryOption {
+  key: string;
+  en: string;
+  as: string;
+}
+
+const VEHICLE_CATEGORIES: CategoryOption[] = [
+  { key: 'Hatchback', en: 'Hatchback', as: 'হেচবেক (Hatchback)' },
+  { key: 'Sedan', en: 'Sedan', as: 'চিডান (Sedan)' },
+  { key: 'SUV', en: 'SUV', as: 'এছ ইউ ভি (SUV)' },
+  { key: 'MUV', en: 'MUV', as: 'এম ইউ ভি (MUV)' },
+  { key: 'Premium Vehicle', en: 'Premium Vehicle', as: 'প্ৰিমিয়াম বাহন (Premium)' },
+  { key: 'Tempo Traveller', en: 'Tempo Traveller', as: 'টেম্পো ট্ৰেভেলাৰ (Tempo)' },
+  { key: 'Mini Bus', en: 'Mini Bus', as: 'মিনি বাছ (Mini Bus)' },
+  { key: 'Bus', en: 'Bus', as: 'বাছ (Bus)' },
+  { key: 'Other', en: 'Other', as: 'অন্যান্য (Other)' },
 ];
+
+const I18N = {
+  en: {
+    badge: 'Drisha Founding Fleet',
+    headline: 'Be Part of Every Journey.',
+    description: "Register your vehicle early and become part of Drisha's growing mobility network. Join us before launch and unlock exclusive partner benefits.",
+    ownerSection: 'Owner Information',
+    fullName: 'Full Name',
+    fullNamePlaceholder: 'e.g. Ramesh Chandra Sharma',
+    mobileNumber: 'Mobile Number',
+    mobilePlaceholder: '10-digit number (e.g. 9876543210)',
+    mobileHelp: 'Used to recognise and link your vehicles when you join Drisha Partner.',
+    vehicleSection: 'Basic Vehicle Information',
+    vehicleCategory: 'Vehicle Category',
+    makeAndModel: 'Vehicle Make & Model',
+    makePlaceholder: 'Make (e.g. Force)',
+    modelPlaceholder: 'Model (e.g. Urbania)',
+    regNumber: 'Registration Number',
+    optionalNote: 'Optional at this stage',
+    regPlaceholder: 'e.g. AS 01 AB 1234',
+    photosSection: 'Vehicle Photographs',
+    photosRequired: '2 to 4 Photos Required',
+    photosDescription: 'Upload exterior/interior photos of your vehicle (front, side, cabin). Supported formats: JPG, JPEG, PNG, WEBP. Maximum 5 MB per file.',
+    addPhoto: 'Add Photo',
+    photoLabel: 'Photo',
+    noDocsNotice: 'No RC, insurance or driving licence documents required at this early stage.',
+    mandatoryConsent: 'I confirm that the information provided is accurate and consent to Drisha contacting me regarding pre-registration and future partner onboarding.',
+    privacyPolicy: 'Privacy Policy',
+    andWord: 'and',
+    terms: 'Terms of Service',
+    marketingConsent: '(Optional) I would like to receive product announcements and partner benefits updates before Drisha launch.',
+    submitBtn: 'Complete Pre-Registration',
+    submittingBtn: 'Submitting Application...',
+    errorTitle: 'Please check the details',
+    successBadge: 'Application Confirmed',
+    successTitle: 'Thank you for joining Drisha Founding Fleet!',
+    successDescription: 'Your vehicle has been successfully pre-registered. Our team will contact you when the next onboarding stage begins.',
+    appIdLabel: 'Unique Application ID',
+    copyId: 'Copy ID',
+    copied: 'Copied!',
+    ownerLabel: 'Owner',
+    vehicleLabel: 'Vehicle',
+    categoryLabel: 'Category',
+    mobileLabel: 'Mobile',
+    registerAnother: 'Register Another Vehicle',
+    partnerEcosystem: 'Partner Ecosystem',
+    maxPhotosError: 'You can upload a maximum of 4 vehicle photographs.',
+    formatError: 'Only JPG, JPEG, PNG and WEBP image formats are supported.',
+    sizeError: (name: string) => `File "${name}" exceeds the 5 MB maximum size limit.`,
+    minPhotosError: 'Please upload at least 2 vehicle photographs (Maximum 4).',
+    consentError: 'Please confirm that the information provided is accurate and consent to Drisha contacting you.',
+  },
+  as: {
+    badge: 'ড্ৰিশ্বা ফাউণ্ডিং ফ্লিট',
+    headline: 'প্ৰতিটো যাত্ৰাৰ অংশীদাৰ হওক।',
+    description: 'আপোনাৰ বাহনখন আগতীয়াকৈ পঞ্জীয়ন কৰক আৰু ড্ৰিশ্বাৰ ক্ৰমবৰ্ধমান মবিলিটি নেটৱৰ্কৰ অংশ হওক। আনুষ্ঠানিক মুকলিৰ পূৰ্বেই যোগদান কৰি বিশেষ পাৰ্টনাৰ সুবিধা লাভ কৰক।',
+    ownerSection: 'মালিকৰ তথ্য (Owner Information)',
+    fullName: 'পূৰ্ণ নাম (Full Name)',
+    fullNamePlaceholder: 'যেনে- ৰমেশ চন্দ্ৰ শৰ্মা',
+    mobileNumber: 'ম\'বাইল নম্বৰ (Mobile Number)',
+    mobilePlaceholder: '১০টা সংখ্যাৰ নম্বৰ (যেনে- ৯৮৭৬৫৪৩২১০)',
+    mobileHelp: 'ড্ৰিশ্বা পাৰ্টনাৰত যোগদান কৰাৰ সময়ত আপোনাৰ বাহনসমূহ চিনাক্ত আৰু সংযোগ কৰিবলৈ এই নম্বৰ ব্যৱহাৰ কৰা হ\'ব।',
+    vehicleSection: 'বাহনৰ প্ৰাথমিক তথ্য (Vehicle Information)',
+    vehicleCategory: 'বাহনৰ শ্ৰেণী (Vehicle Category)',
+    makeAndModel: 'বাহনৰ কোম্পানী আৰু মডেল (Make & Model)',
+    makePlaceholder: 'কোম্পানী (যেনে- Force, Tata)',
+    modelPlaceholder: 'মডেল (যেনে- Urbania, Innova)',
+    regNumber: 'বাহনৰ পঞ্জীয়ন নম্বৰ (Reg. Number)',
+    optionalNote: 'এই পৰ্যায়ত ঐচ্ছিক (Optional)',
+    regPlaceholder: 'যেনে- AS 01 AB 1234',
+    photosSection: 'বাহনৰ আলোকচিত্ৰ (Vehicle Photos)',
+    photosRequired: '২ ৰ পৰা ৪ খন ফটো প্ৰয়োজন',
+    photosDescription: 'আপোনাৰ বাহনৰ ফটো আপলোড কৰক (সন্মুখ, কাষ আৰু ভিতৰৰ চিট)। সমৰ্থিত ফৰ্মেট: JPG, JPEG, PNG, WEBP। প্ৰতিটো ফাইল সৰ্বাধিক ৫ মেগাবাইট।',
+    addPhoto: 'ফটো যোগ কৰক',
+    photoLabel: 'ফটো',
+    noDocsNotice: 'এই প্ৰাৰম্ভিক পৰ্যায়ত কোনো আৰচি (RC), বীমা বা ড্ৰাইভিং লাইচেঞ্চ নথিৰ প্ৰয়োজন নাই।',
+    mandatoryConsent: 'মই নিশ্চিত কৰিছো যে প্ৰদান কৰা সকলো তথ্য সঠিক আৰু প্ৰাক-পঞ্জীয়ন তথা ভৱিষ্যতৰ পাৰ্টনাৰ অনবৰ্ডিঙৰ বিষয়ে ড্ৰিশ্বাই মোৰ সৈতে যোগাযোগ কৰাত সন্মতি জনাইছো।',
+    privacyPolicy: 'গোপনীয়তা নীতি (Privacy Policy)',
+    andWord: 'আৰু',
+    terms: 'সেৱাৰ চৰ্তসমূহ (Terms of Service)',
+    marketingConsent: '(ঐচ্ছিক) ড্ৰিশ্বা আনুষ্ঠানিকভাৱে মুকলি হোৱাৰ পূৰ্বে মই নতুন ঘোষণা আৰু পাৰ্টনাৰ সুবিধাসমূহৰ তথ্য লাভ কৰিব বিচাৰো।',
+    submitBtn: 'প্ৰাক-পঞ্জীয়ন সম্পূৰ্ণ কৰক (Submit)',
+    submittingBtn: 'আবেদন জমা হৈ আছে...',
+    errorTitle: 'অনুগ্ৰহ কৰি তথ্য পৰীক্ষা কৰক',
+    successBadge: 'আবেদন নিশ্চিত হ\'ল (Confirmed)',
+    successTitle: 'ড্ৰিশ্বা ফাউণ্ডিং ফ্লিটত যোগদান কৰাৰ বাবে ধন্যবাদ!',
+    successDescription: 'আপোনাৰ বাহনখন সফলতাৰে প্ৰাক-পঞ্জীয়ন কৰা হৈছে। পৰৱৰ্তী অনবৰ্ডিং পৰ্যায় আৰম্ভ হোৱাৰ লগে লগে আমাৰ দলে আপোনাৰ সৈতে যোগাযোগ কৰিব।',
+    appIdLabel: 'অনন্য আবেদন নম্বৰ (Application ID)',
+    copyId: 'আইডি কপি কৰক',
+    copied: 'কপি কৰা হ\'ল!',
+    ownerLabel: 'মালিকৰ নাম',
+    vehicleLabel: 'বাহন',
+    categoryLabel: 'শ্ৰেণী',
+    mobileLabel: 'ম\'বাইল নম্বৰ',
+    registerAnother: 'আন এখন বাহন পঞ্জীয়ন কৰক',
+    partnerEcosystem: 'পাৰ্টনাৰ ইক\'চিষ্টেম',
+    maxPhotosError: 'আপুনি সৰ্বাধিক ৪ খন বাহনৰ ফটো আপলোড কৰিব পাৰিব।',
+    formatError: 'কেৱল JPG, JPEG, PNG আৰু WEBP ফৰ্মেট সমৰ্থিত।',
+    sizeError: (name: string) => `ফাইল "${name}" ৫ মেগাবাইটৰ অধিক হ'ব নোৱাৰিব।`,
+    minPhotosError: 'অনুগ্ৰহ কৰি কমেও ২ খন বাহনৰ ফটো আপলোড কৰক (সৰ্বাধিক ৪ খন)।',
+    consentError: 'অনুগ্ৰহ কৰি নিশ্চিত কৰক যে তথ্যসমূহ সঠিক আৰু যোগাযোগত সন্মতি দিছে।',
+  },
+};
 
 interface UploadedPhoto {
   id: string;
@@ -42,6 +154,10 @@ interface UploadedPhoto {
 }
 
 export function FoundingFleetSection() {
+  // Language State: 'en' | 'as'
+  const [lang, setLang] = useState<Language>('en');
+  const t = I18N[lang];
+
   // Step / Mode: 'FORM' | 'SUCCESS'
   const [isSuccess, setIsSuccess] = useState(false);
   const [successData, setSuccessData] = useState<PreRegistrationResponse | null>(null);
@@ -75,7 +191,7 @@ export function FoundingFleetSection() {
     if (!files || files.length === 0) return;
 
     if (photos.length + files.length > 4) {
-      setErrorMessage('You can upload a maximum of 4 vehicle photographs.');
+      setErrorMessage(t.maxPhotosError);
       return;
     }
 
@@ -85,11 +201,11 @@ export function FoundingFleetSection() {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)) {
-        setErrorMessage('Only JPG, JPEG, PNG and WEBP image formats are supported.');
+        setErrorMessage(t.formatError);
         return;
       }
       if (file.size > 5 * 1024 * 1024) {
-        setErrorMessage(`File "${file.name}" exceeds the 5 MB maximum size limit.`);
+        setErrorMessage(t.sizeError(file.name));
         return;
       }
       validFiles.push(file);
@@ -156,31 +272,33 @@ export function FoundingFleetSection() {
     setErrorMessage(null);
 
     if (!fullName.trim()) {
-      setErrorMessage('Please enter your full name.');
+      setErrorMessage(lang === 'as' ? 'অনুগ্ৰহ কৰি আপোনাৰ সম্পূৰ্ণ নাম লিখক।' : 'Please enter your full name.');
       return;
     }
 
     const cleanDigits = mobileNumber.replace(/\D/g, '').slice(-10);
     if (cleanDigits.length !== 10) {
-      setErrorMessage('Please enter a valid 10-digit Indian mobile number.');
+      setErrorMessage(lang === 'as' ? 'অনুগ্ৰহ কৰি এটি বৈধ ১০টা সংখ্যাৰ ম\'বাইল নম্বৰ লিখক।' : 'Please enter a valid 10-digit Indian mobile number.');
       return;
     }
 
     if (!vehicleMake.trim() || !vehicleModel.trim()) {
-      setErrorMessage('Please specify both the vehicle make and model (e.g. Force Urbania).');
+      setErrorMessage(
+        lang === 'as'
+          ? 'অনুগ্ৰহ কৰি বাহনৰ নিৰ্মাতা কোম্পানী আৰু মডেল দুয়োটাই উল্লেখ কৰক (যেনে- Force Urbania)।'
+          : 'Please specify both the vehicle make and model (e.g. Force Urbania).'
+      );
       return;
     }
 
     const completedPhotos = photos.filter((p) => p.url && !p.isUploading);
     if (completedPhotos.length < 2) {
-      setErrorMessage('Please upload at least 2 clear vehicle photographs (maximum 4).');
+      setErrorMessage(t.minPhotosError);
       return;
     }
 
     if (!consentAccepted) {
-      setErrorMessage(
-        'Please confirm that the information provided is accurate and consent to Drisha contacting you.'
-      );
+      setErrorMessage(t.consentError);
       return;
     }
 
@@ -231,11 +349,11 @@ export function FoundingFleetSection() {
     <section id="founding-fleet" className="py-20 lg:py-28 bg-ivory relative overflow-hidden border-b border-warm-sand/30">
       <div className="container-editorial">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-10">
           <Reveal>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-champagne text-burgundy text-xs font-bold uppercase tracking-wider mb-4 border border-warm-sand/30">
               <Sparkles size={14} />
-              <span>Drisha Founding Fleet</span>
+              <span>{t.badge}</span>
             </div>
           </Reveal>
 
@@ -244,14 +362,43 @@ export function FoundingFleetSection() {
               className="text-[clamp(2.4rem,5vw,3.8rem)] font-bold tracking-tight text-charcoal leading-[1.08] mb-4"
               style={{ fontFamily: 'var(--font-family-heading)' }}
             >
-              Be Part of Every Journey.
+              {t.headline}
             </h2>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-base sm:text-lg text-taupe leading-relaxed">
-              Register your vehicle early and become part of Drisha's growing mobility network. Join us before launch and unlock exclusive partner benefits.
+            <p className="text-base sm:text-lg text-taupe leading-relaxed mb-6">
+              {t.description}
             </p>
+          </Reveal>
+
+          {/* Language Switcher Pill */}
+          <Reveal delay={0.25}>
+            <div className="inline-flex items-center gap-1.5 p-1 bg-white/90 backdrop-blur-xs rounded-full border border-warm-sand/40 shadow-xs">
+              <Languages size={15} className="text-burgundy ml-2 mr-0.5" />
+              <button
+                type="button"
+                onClick={() => setLang('en')}
+                className={`px-3.5 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  lang === 'en'
+                    ? 'bg-burgundy text-white shadow-xs'
+                    : 'text-charcoal/70 hover:text-burgundy hover:bg-ivory'
+                }`}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang('as')}
+                className={`px-3.5 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  lang === 'as'
+                    ? 'bg-burgundy text-white shadow-xs'
+                    : 'text-charcoal/70 hover:text-burgundy hover:bg-ivory'
+                }`}
+              >
+                অসমীয়া (Assamese)
+              </button>
+            </div>
           </Reveal>
         </div>
 
@@ -266,25 +413,25 @@ export function FoundingFleetSection() {
                 </div>
 
                 <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100/60 px-3 py-1 rounded-full">
-                  Application Confirmed
+                  {t.successBadge}
                 </span>
 
                 <h3
                   className="text-2xl sm:text-3xl font-bold text-charcoal mt-4 mb-3"
                   style={{ fontFamily: 'var(--font-family-heading)' }}
                 >
-                  Thank you for joining Drisha Founding Fleet!
+                  {t.successTitle}
                 </h3>
 
                 <p className="text-taupe text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-                  Your vehicle has been successfully pre-registered. Our team will contact you when the next onboarding stage begins.
+                  {t.successDescription}
                 </p>
 
                 {/* Application ID Card */}
                 <div className="bg-ivory rounded-2xl p-6 border border-warm-sand/40 max-w-md mx-auto mb-8 text-left">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs uppercase font-bold text-taupe tracking-wider">
-                      Unique Application ID
+                      {t.appIdLabel}
                     </span>
                     <button
                       onClick={copyApplicationId}
@@ -293,12 +440,12 @@ export function FoundingFleetSection() {
                       {copiedAppId ? (
                         <>
                           <Check size={14} className="text-emerald-600" />
-                          <span className="text-emerald-600">Copied!</span>
+                          <span className="text-emerald-600">{t.copied}</span>
                         </>
                       ) : (
                         <>
                           <Copy size={14} />
-                          <span>Copy ID</span>
+                          <span>{t.copyId}</span>
                         </>
                       )}
                     </button>
@@ -308,21 +455,21 @@ export function FoundingFleetSection() {
                   </div>
                   <div className="mt-4 pt-4 border-t border-warm-sand/30 grid grid-cols-2 gap-3 text-xs">
                     <div>
-                      <span className="text-taupe block">Owner</span>
+                      <span className="text-taupe block">{t.ownerLabel}</span>
                       <span className="font-semibold text-charcoal">{successData.registration.fullName}</span>
                     </div>
                     <div>
-                      <span className="text-taupe block">Vehicle</span>
+                      <span className="text-taupe block">{t.vehicleLabel}</span>
                       <span className="font-semibold text-charcoal">
                         {successData.registration.vehicleMake} {successData.registration.vehicleModel}
                       </span>
                     </div>
                     <div>
-                      <span className="text-taupe block">Category</span>
+                      <span className="text-taupe block">{t.categoryLabel}</span>
                       <span className="font-semibold text-charcoal">{successData.registration.vehicleCategory}</span>
                     </div>
                     <div>
-                      <span className="text-taupe block">Mobile</span>
+                      <span className="text-taupe block">{t.mobileLabel}</span>
                       <span className="font-semibold text-charcoal font-mono">
                         {successData.registration.normalizedMobileNumber}
                       </span>
@@ -340,7 +487,7 @@ export function FoundingFleetSection() {
                     className="w-full sm:w-auto gap-2"
                   >
                     <Plus size={18} />
-                    Register Another Vehicle
+                    {t.registerAnother}
                   </Button>
 
                   <Button
@@ -349,7 +496,7 @@ export function FoundingFleetSection() {
                     rounded="full"
                     className="w-full sm:w-auto gap-2"
                   >
-                    Partner Ecosystem
+                    {t.partnerEcosystem}
                     <ArrowRight size={18} />
                   </Button>
                 </div>
@@ -362,12 +509,43 @@ export function FoundingFleetSection() {
                 onSubmit={handleSubmit}
                 className="bg-white rounded-3xl p-6 sm:p-10 border border-warm-sand/40 shadow-md space-y-8"
               >
+                {/* Form Header with Language Toggle */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-warm-sand/30">
+                  <span className="text-xs font-bold uppercase tracking-wider text-taupe">
+                    {lang === 'as' ? 'অনলাইন প্ৰাক-পঞ্জীয়ন প্ৰপত্ৰ' : 'Online Pre-Registration Form'}
+                  </span>
+                  <div className="inline-flex items-center gap-1 p-1 bg-ivory rounded-full border border-warm-sand/40">
+                    <button
+                      type="button"
+                      onClick={() => setLang('en')}
+                      className={`px-3 py-0.5 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
+                        lang === 'en'
+                          ? 'bg-burgundy text-white shadow-2xs'
+                          : 'text-charcoal/70 hover:text-burgundy'
+                      }`}
+                    >
+                      English
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setLang('as')}
+                      className={`px-3 py-0.5 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
+                        lang === 'as'
+                          ? 'bg-burgundy text-white shadow-2xs'
+                          : 'text-charcoal/70 hover:text-burgundy'
+                      }`}
+                    >
+                      অসমীয়া
+                    </button>
+                  </div>
+                </div>
+
                 {/* Error Banner */}
                 {errorMessage && (
                   <div className="bg-red-50 border border-red-200 text-red-800 rounded-2xl p-4 flex items-start gap-3 text-sm">
                     <AlertCircle size={20} className="text-red-600 flex-shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-semibold block mb-0.5">Please check the details</span>
+                      <span className="font-semibold block mb-0.5">{t.errorTitle}</span>
                       <span>{errorMessage}</span>
                     </div>
                   </div>
@@ -380,7 +558,7 @@ export function FoundingFleetSection() {
                       1
                     </div>
                     <h3 className="text-lg font-bold text-charcoal" style={{ fontFamily: 'var(--font-family-heading)' }}>
-                      Owner Information
+                      {t.ownerSection}
                     </h3>
                   </div>
 
@@ -388,14 +566,14 @@ export function FoundingFleetSection() {
                     {/* Full Name */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80 mb-1.5">
-                        Full Name <span className="text-burgundy">*</span>
+                        {t.fullName} <span className="text-burgundy">*</span>
                       </label>
                       <input
                         type="text"
                         required
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        placeholder="e.g. Ramesh Chandra Sharma"
+                        placeholder={t.fullNamePlaceholder}
                         className="w-full px-4 py-3 rounded-xl border border-warm-sand/50 bg-ivory/40 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy text-charcoal text-sm transition-all"
                       />
                     </div>
@@ -403,18 +581,18 @@ export function FoundingFleetSection() {
                     {/* Mobile Number */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80 mb-1.5">
-                        Mobile Number <span className="text-burgundy">*</span>
+                        {t.mobileNumber} <span className="text-burgundy">*</span>
                       </label>
                       <input
                         type="tel"
                         required
                         value={mobileNumber}
                         onChange={(e) => setMobileNumber(e.target.value)}
-                        placeholder="10-digit number (e.g. 9876543210)"
+                        placeholder={t.mobilePlaceholder}
                         className="w-full px-4 py-3 rounded-xl border border-warm-sand/50 bg-ivory/40 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy text-charcoal text-sm transition-all"
                       />
                       <span className="text-[11px] text-taupe mt-1 block">
-                        Used to recognise and link your vehicles when you join Drisha Partner.
+                        {t.mobileHelp}
                       </span>
                     </div>
                   </div>
@@ -427,28 +605,28 @@ export function FoundingFleetSection() {
                       2
                     </div>
                     <h3 className="text-lg font-bold text-charcoal" style={{ fontFamily: 'var(--font-family-heading)' }}>
-                      Basic Vehicle Information
+                      {t.vehicleSection}
                     </h3>
                   </div>
 
                   {/* Vehicle Category */}
                   <div className="mb-4">
                     <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80 mb-2">
-                      Vehicle Category <span className="text-burgundy">*</span>
+                      {t.vehicleCategory} <span className="text-burgundy">*</span>
                     </label>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {VEHICLE_CATEGORIES.map((cat) => (
                         <button
-                          key={cat}
+                          key={cat.key}
                           type="button"
-                          onClick={() => setVehicleCategory(cat)}
+                          onClick={() => setVehicleCategory(cat.key)}
                           className={`px-3 py-2.5 rounded-xl border text-xs font-semibold text-left transition-all cursor-pointer ${
-                            vehicleCategory === cat
+                            vehicleCategory === cat.key
                               ? 'bg-burgundy text-white border-burgundy shadow-xs'
                               : 'bg-ivory/50 text-charcoal border-warm-sand/40 hover:bg-white hover:border-warm-sand'
                           }`}
                         >
-                          {cat}
+                          {lang === 'as' ? cat.as : cat.en}
                         </button>
                       ))}
                     </div>
@@ -458,7 +636,7 @@ export function FoundingFleetSection() {
                     {/* Make & Model */}
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80 mb-1.5">
-                        Vehicle Make & Model <span className="text-burgundy">*</span>
+                        {t.makeAndModel} <span className="text-burgundy">*</span>
                       </label>
                       <div className="grid grid-cols-2 gap-2">
                         <input
@@ -466,7 +644,7 @@ export function FoundingFleetSection() {
                           required
                           value={vehicleMake}
                           onChange={(e) => setVehicleMake(e.target.value)}
-                          placeholder="Make (e.g. Force)"
+                          placeholder={t.makePlaceholder}
                           className="w-full px-3 py-3 rounded-xl border border-warm-sand/50 bg-ivory/40 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy text-charcoal text-sm"
                         />
                         <input
@@ -474,7 +652,7 @@ export function FoundingFleetSection() {
                           required
                           value={vehicleModel}
                           onChange={(e) => setVehicleModel(e.target.value)}
-                          placeholder="Model (e.g. Urbania)"
+                          placeholder={t.modelPlaceholder}
                           className="w-full px-3 py-3 rounded-xl border border-warm-sand/50 bg-ivory/40 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy text-charcoal text-sm"
                         />
                       </div>
@@ -484,15 +662,15 @@ export function FoundingFleetSection() {
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
                         <label className="text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                          Registration Number
+                          {t.regNumber}
                         </label>
-                        <span className="text-[11px] text-taupe font-medium">Optional at this stage</span>
+                        <span className="text-[11px] text-taupe font-medium">{t.optionalNote}</span>
                       </div>
                       <input
                         type="text"
                         value={vehicleRegistrationNumber}
                         onChange={(e) => setVehicleRegistrationNumber(e.target.value.toUpperCase())}
-                        placeholder="e.g. AS 01 AB 1234"
+                        placeholder={t.regPlaceholder}
                         className="w-full px-4 py-3 rounded-xl border border-warm-sand/50 bg-ivory/40 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy text-charcoal font-mono text-sm uppercase"
                       />
                     </div>
@@ -507,16 +685,16 @@ export function FoundingFleetSection() {
                         3
                       </div>
                       <h3 className="text-lg font-bold text-charcoal" style={{ fontFamily: 'var(--font-family-heading)' }}>
-                        Vehicle Photographs
+                        {t.photosSection}
                       </h3>
                     </div>
                     <span className="text-xs font-semibold text-burgundy bg-burgundy/10 px-2.5 py-1 rounded-full">
-                      2 to 4 Photos Required
+                      {t.photosRequired}
                     </span>
                   </div>
 
                   <p className="text-xs text-taupe mb-4 leading-relaxed">
-                    Upload exterior/interior photos of your vehicle (front, side, cabin). Supported formats: JPG, JPEG, PNG, WEBP. Maximum 5 MB per file.
+                    {t.photosDescription}
                   </p>
 
                   {/* Photo Grid */}
@@ -535,7 +713,7 @@ export function FoundingFleetSection() {
                         {photo.isUploading && (
                           <div className="absolute inset-0 bg-charcoal/60 backdrop-blur-xs flex flex-col items-center justify-center text-white text-xs p-2 text-center">
                             <RefreshCw size={20} className="animate-spin mb-1 text-champagne" />
-                            <span>Uploading {photo.progress}%</span>
+                            <span>{lang === 'as' ? `আপলোড হৈ আছে ${photo.progress}%` : `Uploading ${photo.progress}%`}</span>
                           </div>
                         )}
 
@@ -555,7 +733,7 @@ export function FoundingFleetSection() {
                         </button>
 
                         <div className="absolute bottom-2 left-2 bg-charcoal/80 text-white text-[10px] px-2 py-0.5 rounded-full font-medium">
-                          Photo {index + 1}
+                          {t.photoLabel} {index + 1}
                         </div>
                       </div>
                     ))}
@@ -568,7 +746,7 @@ export function FoundingFleetSection() {
                         className="aspect-4/3 rounded-2xl border-2 border-dashed border-warm-sand/60 hover:border-burgundy bg-ivory/40 hover:bg-champagne/20 flex flex-col items-center justify-center gap-1.5 text-taupe hover:text-burgundy transition-all p-3 text-center cursor-pointer"
                       >
                         <UploadCloud size={24} />
-                        <span className="text-xs font-bold">Add Photo</span>
+                        <span className="text-xs font-bold">{t.addPhoto}</span>
                         <span className="text-[10px] text-taupe/80">({photos.length}/4)</span>
                       </button>
                     )}
@@ -585,7 +763,7 @@ export function FoundingFleetSection() {
 
                   <div className="text-[11px] text-taupe flex items-center gap-1.5 mt-2">
                     <Info size={14} className="flex-shrink-0" />
-                    <span>No RC, insurance or driving licence documents required at this early stage.</span>
+                    <span>{t.noDocsNotice}</span>
                   </div>
                 </div>
 
@@ -601,14 +779,14 @@ export function FoundingFleetSection() {
                       className="mt-1 w-4 h-4 rounded text-burgundy focus:ring-burgundy/40 border-warm-sand/60 accent-burgundy cursor-pointer"
                     />
                     <span className="text-xs text-charcoal/90 leading-relaxed font-medium">
-                      I confirm that the information provided is accurate and consent to Drisha contacting me regarding pre-registration and future partner onboarding.{' '}
+                      {t.mandatoryConsent}{' '}
                       <span className="text-burgundy">*</span>{' '}
                       <a href="/privacy" target="_blank" className="text-burgundy underline hover:text-burgundyDark">
-                        Privacy Policy
+                        {t.privacyPolicy}
                       </a>{' '}
-                      and{' '}
+                      {t.andWord}{' '}
                       <a href="/terms" target="_blank" className="text-burgundy underline hover:text-burgundyDark">
-                        Terms of Service
+                        {t.terms}
                       </a>.
                     </span>
                   </label>
@@ -622,7 +800,7 @@ export function FoundingFleetSection() {
                       className="mt-1 w-4 h-4 rounded text-burgundy focus:ring-burgundy/40 border-warm-sand/60 accent-burgundy cursor-pointer"
                     />
                     <span className="text-xs text-taupe leading-relaxed">
-                      (Optional) I would like to receive product announcements and partner benefits updates before Drisha launch.
+                      {t.marketingConsent}
                     </span>
                   </label>
                 </div>
@@ -645,10 +823,10 @@ export function FoundingFleetSection() {
                     {isSubmitting ? (
                       <span className="inline-flex items-center gap-2">
                         <RefreshCw size={18} className="animate-spin" />
-                        Submitting Application...
+                        {t.submittingBtn}
                       </span>
                     ) : (
-                      'Complete Pre-Registration'
+                      t.submitBtn
                     )}
                   </Button>
                 </div>
