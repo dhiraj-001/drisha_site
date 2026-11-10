@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   CheckCircle2,
   UploadCloud,
@@ -15,8 +15,6 @@ import {
 import { Reveal } from '../animations/Reveal';
 import { Button } from '../ui/Button';
 import {
-  sendOtp,
-  verifyOtp,
   uploadVehiclePhoto,
   submitRegistration,
 } from '../../lib/api';
@@ -51,17 +49,6 @@ export function FoundingFleetSection() {
   // Owner Info
   const [fullName, setFullName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
-  const [normalizedPhone, setNormalizedPhone] = useState('');
-
-  // OTP State
-  const [otpCode, setOtpCode] = useState('');
-  const [isOtpSent, setIsOtpSent] = useState(false);
-  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
-  const [isSendingOtp, setIsSendingOtp] = useState(false);
-  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
-  const [otpTimer, setOtpTimer] = useState(0);
-  const [demoOtpHint, setDemoOtpHint] = useState<string | null>(null);
-  const [existingUserHint, setExistingUserHint] = useState<string | null>(null);
 
   // Vehicle Details
   const [vehicleCategory, setVehicleCategory] = useState<string>('Tempo Traveller');
@@ -81,75 +68,6 @@ export function FoundingFleetSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [copiedAppId, setCopiedAppId] = useState(false);
-
-  // OTP Resend Countdown
-  useEffect(() => {
-    let interval: any = null;
-    if (otpTimer > 0) {
-      interval = setInterval(() => {
-        setOtpTimer((prev) => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [otpTimer]);
-
-  // Handle Send OTP
-  const handleSendOtp = async () => {
-    const cleanDigits = mobileNumber.replace(/\D/g, '').slice(-10);
-    if (cleanDigits.length !== 10) {
-      setErrorMessage('Please enter a valid 10-digit Indian mobile number.');
-      return;
-    }
-
-    setErrorMessage(null);
-    setIsSendingOtp(true);
-    try {
-      const res = await sendOtp(cleanDigits);
-      setIsOtpSent(true);
-      setNormalizedPhone(res.normalizedPhone);
-      setOtpTimer(30);
-
-      if (res.debug_otp) {
-        setDemoOtpHint(res.debug_otp);
-      }
-
-      if (res.isPreviouslyRegistered) {
-        setExistingUserHint(
-          `Welcome back ${res.previousOwnerName || ''}! You have already pre-registered ${res.previousRegistrationsCount} vehicle(s) with this number.`
-        );
-        if (res.previousOwnerName && !fullName) {
-          setFullName(res.previousOwnerName);
-        }
-      }
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to dispatch OTP. Please try again.');
-    } finally {
-      setIsSendingOtp(false);
-    }
-  };
-
-  // Handle Verify OTP
-  const handleVerifyOtp = async () => {
-    if (!otpCode || otpCode.trim().length !== 6) {
-      setErrorMessage('Please enter the 6-digit OTP received on your mobile.');
-      return;
-    }
-
-    setErrorMessage(null);
-    setIsVerifyingOtp(true);
-    try {
-      const res = await verifyOtp(normalizedPhone || mobileNumber, otpCode);
-      setIsPhoneVerified(true);
-      if (res.registeredName && !fullName) {
-        setFullName(res.registeredName);
-      }
-      setDemoOtpHint(null);
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Invalid or expired OTP code.');
-    } finally {
-      setIsVerifyingOtp(false);
-    }
-  };
 
   // Handle File Selection & Upload
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -246,8 +164,9 @@ export function FoundingFleetSection() {
       return;
     }
 
-    if (!isPhoneVerified) {
-      setErrorMessage('Please verify your mobile number via OTP before submitting.');
+    const cleanDigits = mobileNumber.replace(/\D/g, '').slice(-10);
+    if (cleanDigits.length !== 10) {
+      setErrorMessage('Please enter a valid 10-digit Indian mobile number.');
       return;
     }
 
@@ -264,7 +183,7 @@ export function FoundingFleetSection() {
 
     if (!consentAccepted) {
       setErrorMessage(
-        'Please confirm that the information provided is accurate and consent to being contacted.'
+        'Please confirm that the information provided is accurate and consent to Drisha contacting you.'
       );
       return;
     }
@@ -274,7 +193,6 @@ export function FoundingFleetSection() {
       const response = await submitRegistration({
         fullName: fullName.trim(),
         mobileNumber: mobileNumber.trim(),
-        skipOtpCheck: true, // Phone was verified in UI
         vehicleCategory,
         vehicleMake: vehicleMake.trim(),
         vehicleModel: vehicleModel.trim(),
@@ -293,7 +211,7 @@ export function FoundingFleetSection() {
     }
   };
 
-  // Reset for adding another vehicle under the same verified owner
+  // Reset for adding another vehicle under the same owner
   const handleRegisterAnotherVehicle = () => {
     setVehicleMake('');
     setVehicleModel('');
@@ -374,7 +292,7 @@ export function FoundingFleetSection() {
                     </span>
                     <button
                       onClick={copyApplicationId}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-burgundy hover:text-burgundyDark transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-burgundy hover:text-burgundyDark transition-colors cursor-pointer"
                     >
                       {copiedAppId ? (
                         <>
@@ -459,17 +377,6 @@ export function FoundingFleetSection() {
                   </div>
                 )}
 
-                {/* Existing User Hint */}
-                {existingUserHint && (
-                  <div className="bg-amber-50 border border-amber-200 text-amber-900 rounded-2xl p-4 flex items-start gap-3 text-sm">
-                    <Sparkles size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold block mb-0.5">Recognized Partner</span>
-                      <span>{existingUserHint}</span>
-                    </div>
-                  </div>
-                )}
-
                 {/* SECTION A: OWNER INFORMATION */}
                 <div>
                   <div className="flex items-center gap-2 mb-4 pb-2 border-b border-warm-sand/20">
@@ -502,97 +409,19 @@ export function FoundingFleetSection() {
                       <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80 mb-1.5">
                         Mobile Number <span className="text-burgundy">*</span>
                       </label>
-                      <div className="relative">
-                        <input
-                          type="tel"
-                          required
-                          disabled={isPhoneVerified}
-                          value={mobileNumber}
-                          onChange={(e) => {
-                            setMobileNumber(e.target.value);
-                            setIsOtpSent(false);
-                            setIsPhoneVerified(false);
-                          }}
-                          placeholder="10-digit number (e.g. 9876543210)"
-                          className={`w-full px-4 py-3 rounded-xl border text-sm transition-all ${
-                            isPhoneVerified
-                              ? 'bg-emerald-50 border-emerald-300 text-emerald-900 font-semibold'
-                              : 'border-warm-sand/50 bg-ivory/40 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy text-charcoal'
-                          }`}
-                        />
-                        {isPhoneVerified && (
-                          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-emerald-600 text-xs font-bold">
-                            <CheckCircle2 size={16} />
-                            <span>Verified</span>
-                          </div>
-                        )}
-                      </div>
+                      <input
+                        type="tel"
+                        required
+                        value={mobileNumber}
+                        onChange={(e) => setMobileNumber(e.target.value)}
+                        placeholder="10-digit number (e.g. 9876543210)"
+                        className="w-full px-4 py-3 rounded-xl border border-warm-sand/50 bg-ivory/40 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy text-charcoal text-sm transition-all"
+                      />
+                      <span className="text-[11px] text-taupe mt-1 block">
+                        Used to recognise and link your vehicles when you join Drisha Partner.
+                      </span>
                     </div>
                   </div>
-
-                  {/* OTP Verification Box */}
-                  {!isPhoneVerified && (
-                    <div className="mt-4 p-4 rounded-2xl bg-champagne/40 border border-warm-sand/30 space-y-3">
-                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                        <div className="text-xs text-taupe leading-relaxed">
-                          OTP verification is required to verify ownership of your mobile number.
-                        </div>
-
-                        {!isOtpSent ? (
-                          <Button
-                            type="button"
-                            onClick={handleSendOtp}
-                            disabled={isSendingOtp || !mobileNumber}
-                            size="sm"
-                            rounded="lg"
-                            className="text-xs whitespace-nowrap"
-                          >
-                            {isSendingOtp ? 'Sending OTP...' : 'Send Verification OTP'}
-                          </Button>
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={handleSendOtp}
-                            disabled={otpTimer > 0 || isSendingOtp}
-                            className={`text-xs font-bold ${
-                              otpTimer > 0 ? 'text-taupe cursor-not-allowed' : 'text-burgundy hover:underline'
-                            }`}
-                          >
-                            {otpTimer > 0 ? `Resend OTP in ${otpTimer}s` : 'Resend OTP'}
-                          </button>
-                        )}
-                      </div>
-
-                      {isOtpSent && (
-                        <div className="flex items-center gap-3 pt-2">
-                          <input
-                            type="text"
-                            maxLength={6}
-                            value={otpCode}
-                            onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                            placeholder="Enter 6-digit OTP"
-                            className="w-48 px-4 py-2.5 rounded-xl border border-warm-sand/60 bg-white text-center font-mono font-bold tracking-widest text-charcoal text-base focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy outline-hidden"
-                          />
-                          <Button
-                            type="button"
-                            onClick={handleVerifyOtp}
-                            disabled={isVerifyingOtp || otpCode.length !== 6}
-                            size="sm"
-                            rounded="lg"
-                            className="text-xs"
-                          >
-                            {isVerifyingOtp ? 'Verifying...' : 'Verify OTP'}
-                          </Button>
-                        </div>
-                      )}
-
-                      {demoOtpHint && (
-                        <div className="text-[11px] text-burgundy font-mono bg-white/80 p-2 rounded-lg border border-burgundy/20 inline-block">
-                          💡 Demo verification code: <strong>{demoOtpHint}</strong>
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </div>
 
                 {/* SECTION B: VEHICLE INFORMATION */}
@@ -617,7 +446,7 @@ export function FoundingFleetSection() {
                           key={cat}
                           type="button"
                           onClick={() => setVehicleCategory(cat)}
-                          className={`px-3 py-2.5 rounded-xl border text-xs font-semibold text-left transition-all ${
+                          className={`px-3 py-2.5 rounded-xl border text-xs font-semibold text-left transition-all cursor-pointer ${
                             vehicleCategory === cat
                               ? 'bg-burgundy text-white border-burgundy shadow-xs'
                               : 'bg-ivory/50 text-charcoal border-warm-sand/40 hover:bg-white hover:border-warm-sand'
@@ -723,7 +552,7 @@ export function FoundingFleetSection() {
                         <button
                           type="button"
                           onClick={() => handleRemovePhoto(photo.id)}
-                          className="absolute top-2 right-2 w-7 h-7 rounded-full bg-charcoal/70 text-white hover:bg-burgundy flex items-center justify-center transition-colors shadow-sm"
+                          className="absolute top-2 right-2 w-7 h-7 rounded-full bg-charcoal/70 text-white hover:bg-burgundy flex items-center justify-center transition-colors shadow-sm cursor-pointer"
                           title="Remove photo"
                         >
                           <X size={14} />
@@ -806,7 +635,13 @@ export function FoundingFleetSection() {
                 <div className="pt-4">
                   <Button
                     type="submit"
-                    disabled={isSubmitting || !isPhoneVerified || photos.filter((p) => p.url).length < 2 || !consentAccepted}
+                    disabled={
+                      isSubmitting ||
+                      !fullName.trim() ||
+                      mobileNumber.replace(/\D/g, '').length < 10 ||
+                      photos.filter((p) => p.url).length < 2 ||
+                      !consentAccepted
+                    }
                     size="lg"
                     rounded="full"
                     className="w-full text-base font-bold shadow-md hover:shadow-lg transition-all"
@@ -820,12 +655,6 @@ export function FoundingFleetSection() {
                       'Complete Pre-Registration'
                     )}
                   </Button>
-
-                  {!isPhoneVerified && (
-                    <p className="text-center text-xs text-burgundy font-medium mt-2">
-                      Please verify your mobile number via OTP above to submit.
-                    </p>
-                  )}
                 </div>
               </form>
             </Reveal>

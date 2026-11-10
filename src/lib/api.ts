@@ -145,8 +145,6 @@ export async function uploadVehiclePhoto(
 export async function submitRegistration(payload: {
   fullName: string;
   mobileNumber: string;
-  otp?: string;
-  skipOtpCheck?: boolean;
   vehicleCategory: string;
   vehicleMake: string;
   vehicleModel: string;

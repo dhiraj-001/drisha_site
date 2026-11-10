@@ -3,7 +3,7 @@
 
 export const siteConfig = {
   name: 'Drisha Mobility',
-  tagline: 'Move Together. Move Better.',
+  tagline: 'Move Smarter, Together.',
   positioning: 'Group journeys, connected across India.',
   supportingStatement:
     'Starting in Northeast India, Drisha is building a smarter way to organize group transportation — connecting travellers, fleet owners, and professional drivers.',
