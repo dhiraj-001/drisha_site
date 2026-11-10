@@ -9,6 +9,34 @@ export function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const renderFooterLink = (link: { label: string; href: string }) => {
+    const isExternal = link.href.startsWith('http://') || link.href.startsWith('https://') || link.href.startsWith('mailto:');
+    const className = "text-sm text-white/65 hover:text-white hover:translate-x-0.5 inline-block transition-all duration-200";
+
+    if (isExternal) {
+      return (
+        <li key={link.label}>
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={className}
+          >
+            {link.label}
+          </a>
+        </li>
+      );
+    }
+
+    return (
+      <li key={link.label}>
+        <Link to={link.href} className={className}>
+          {link.label}
+        </Link>
+      </li>
+    );
+  };
+
   return (
     <footer className="relative bg-[#1a1715] text-white/80 -mt-px overflow-hidden pt-5">
       {/* Background subtle ambiance glow */}
@@ -80,16 +108,7 @@ export function Footer() {
                 Explore
               </h4>
               <ul className="space-y-3">
-                {footerLinks.explore.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      to={link.href}
-                      className="text-sm text-white/65 hover:text-white hover:translate-x-0.5 inline-block transition-all duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {footerLinks.explore.map(renderFooterLink)}
               </ul>
             </div>
 
@@ -100,16 +119,7 @@ export function Footer() {
                 Partners
               </h4>
               <ul className="space-y-3">
-                {footerLinks.partners.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.href}
-                      className="text-sm text-white/65 hover:text-white hover:translate-x-0.5 inline-block transition-all duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {footerLinks.partners.map(renderFooterLink)}
               </ul>
             </div>
 
@@ -120,16 +130,7 @@ export function Footer() {
                 Business
               </h4>
               <ul className="space-y-3">
-                {footerLinks.business.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.href}
-                      className="text-sm text-white/65 hover:text-white hover:translate-x-0.5 inline-block transition-all duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {footerLinks.business.map(renderFooterLink)}
               </ul>
             </div>
 
@@ -140,16 +141,7 @@ export function Footer() {
                 Legal
               </h4>
               <ul className="space-y-3">
-                {footerLinks.legal.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.href}
-                      className="text-sm text-white/65 hover:text-white hover:translate-x-0.5 inline-block transition-all duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {footerLinks.legal.map(renderFooterLink)}
               </ul>
             </div>
           </div>

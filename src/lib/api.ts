@@ -2,7 +2,12 @@
  * Founding Fleet & Admin Client API for Drisha Website
  */
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
+const API_BASE =
+  import.meta.env.VITE_API_BASE ||
+  (import.meta.env.PROD ? 'https://drisha-backend.onrender.com' : 'http://localhost:5000');
+
+const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dbzmiivwm';
+const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'drisha_uploads';
 
 export interface PreRegistrationResponse {
   success: boolean;
@@ -107,22 +112,64 @@ export async function verifyOtp(mobileNumber: string, otp: string) {
 }
 
 /**
- * Upload vehicle photo via base64 data URL
+ * Upload vehicle photo: Attempts direct Cloudinary CDN upload first
+ * (bypassing backend cold starts and CORS restrictions), with graceful fallback
+ * to backend server upload.
  */
 export async function uploadVehiclePhoto(
-  base64Data: string,
+  fileOrBase64: File | string,
   onProgress?: (progress: number) => void
 ): Promise<string> {
-  // Simulate progress steps if callback provided
-  if (onProgress) onProgress(30);
+  if (onProgress) onProgress(20);
+
+  // 1. Direct Cloudinary Upload (fastest, CDN-backed, no mixed content)
+  try {
+    const formData = new FormData();
+    formData.append('file', fileOrBase64);
+    formData.append('upload_preset', UPLOAD_PRESET);
+    formData.append('folder', 'drisha/founding-fleet');
+
+    if (onProgress) onProgress(50);
+
+    const cloudRes = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+
+    if (cloudRes.ok) {
+      const cloudData = await cloudRes.json();
+      if (cloudData.secure_url) {
+        if (onProgress) onProgress(100);
+        return cloudData.secure_url;
+      }
+    }
+  } catch (cloudErr) {
+    console.warn('Direct Cloudinary upload failed, falling back to backend:', cloudErr);
+  }
+
+  // 2. Fallback to Backend Server Upload
+  if (onProgress) onProgress(65);
+
+  let base64Payload = '';
+  if (typeof fileOrBase64 === 'string') {
+    base64Payload = fileOrBase64;
+  } else {
+    base64Payload = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(fileOrBase64);
+    });
+  }
 
   const res = await fetch(`${API_BASE}/api/founding-fleet/upload`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data: base64Data }),
+    body: JSON.stringify({ data: base64Payload }),
   });
-
-  if (onProgress) onProgress(80);
 
   const data = await res.json();
   if (!res.ok) {

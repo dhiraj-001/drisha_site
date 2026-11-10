@@ -17,15 +17,24 @@ import FoundingFleetPage from './pages/FoundingFleetPage';
 import AdminFoundingFleet from './pages/AdminFoundingFleet';
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    if (hash) {
+      const targetId = hash.replace('#', '');
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: 'instant' as ScrollBehavior,
     });
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 }
