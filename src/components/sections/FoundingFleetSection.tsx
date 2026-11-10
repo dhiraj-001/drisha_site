@@ -112,12 +112,9 @@ export function FoundingFleetSection() {
         },
       ]);
 
-      // Convert to base64
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const base64Data = reader.result as string;
+      (async () => {
         try {
-          const uploadedUrl = await uploadVehiclePhoto(base64Data, (progress) => {
+          const uploadedUrl = await uploadVehiclePhoto(file, (progress) => {
             setPhotos((prev) =>
               prev.map((p) => (p.id === photoId ? { ...p, progress } : p))
             );
@@ -139,8 +136,7 @@ export function FoundingFleetSection() {
             )
           );
         }
-      };
-      reader.readAsDataURL(file);
+      })();
     }
 
     // Reset input
